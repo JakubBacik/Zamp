@@ -11,11 +11,13 @@ LibInterface::LibInterface(const char* nameOfLib){
 
   if (!_LibHandler) {
     std::cerr << "!!!" << fullNameOfLib <<" not found" << std::endl;
+    exit(0);
   }
 
   _pFun = dlsym(_LibHandler,"CreateCmd");
   if (!_pFun) {
     std::cerr << "!!! CreateCmd not found" << std::endl;
+    exit(0);
   }
 
   _pCreateCmd = reinterpret_cast<Interp4Command* (*)(void)>(_pFun);
