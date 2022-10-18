@@ -6,23 +6,28 @@
 #include "MobileObj.hh"
 #include <string>
 #include <cstdio>
+#include "LibInterface.hh"
+#include <map>
+#include <memory>
 
 using namespace std;
 
 bool ExecPreprocesor(const char* NameOfFile, istringstream &IStrm4Cmds){
-    string Cmd4Preproc = "cpp -P ";
-    char Line[500];
-    ostringstream OTmpStrm;
+    constexpr int sizeOfLine = 500;
+    string cmd4Preproc = "cpp -P ";
+    char line[sizeOfLine];
+    ostringstream oTmpStrm;
 
-    Cmd4Preproc += NameOfFile;
-    FILE* pProc = popen(Cmd4Preproc.c_str(), "r");
+    cmd4Preproc += NameOfFile;
+    FILE* pProc = popen(cmd4Preproc.c_str(), "r");
 
-    if(!pProc) return false;
+    if(!pProc) 
+      return false;
 
-    while(fgets(Line, 500, pProc)){
-      OTmpStrm << Line;
+    while(fgets(line, sizeOfLine, pProc)){
+      oTmpStrm << line;
     }
-    IStrm4Cmds.str(OTmpStrm.str());
+    IStrm4Cmds.str(oTmpStrm.str());
 
     return pclose(pProc) == 0;
 }
@@ -60,7 +65,8 @@ int main(int argc, char **argv)
   
   delete pCmd;
 
-  dlclose(pLibHnd_Move);*/
+  dlclose(pLibHnd_Move);
+  */
   if(argc < 2){
     cerr << "Not enough number of Parameters" << endl;
     return 1;
@@ -73,6 +79,9 @@ int main(int argc, char **argv)
   }
 
   cout << IStrm4Cmds.str() << endl;
+
+  std::map<std::string, std::unique_ptr<LibInterface>> mapToInterface;
+  mapToInterface[{"Move"}] = std::make_unique<LibInterface>(LibInterface{"Move"});
   
   return 0;
 }
