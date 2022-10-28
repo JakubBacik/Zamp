@@ -10,8 +10,10 @@ class LibInterface{
     std::string _CmdName;
     Interp4Command *(*_pCreateCmd)(void);
 
+
     public:
     LibInterface(const char* nameOfLib);
+    int LibInterfaceInit();
     ~LibInterface();
 };
 

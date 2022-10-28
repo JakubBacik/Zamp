@@ -34,39 +34,7 @@ bool ExecPreprocesor(const char* NameOfFile, istringstream &IStrm4Cmds){
 
 
 int main(int argc, char **argv)
-{/*
-  void *pLibHnd_Move = dlopen("libInterp4Move.so",RTLD_LAZY);
-  Interp4Command *(*pCreateCmd_Move)(void);
-  void *pFun;
-
-  if (!pLibHnd_Move) {
-    cerr << "!!! Brak biblioteki: Interp4Move.so" << endl;
-    return 1;
-  }
-
-
-  pFun = dlsym(pLibHnd_Move,"CreateCmd");
-  if (!pFun) {
-    cerr << "!!! Nie znaleziono funkcji CreateCmd" << endl;
-    return 1;
-  }
-  pCreateCmd_Move = *reinterpret_cast<Interp4Command* (**)(void)>(&pFun);
-
-
-  Interp4Command *pCmd = pCreateCmd_Move();
-
-  cout << endl;
-  cout << pCmd->GetCmdName() << endl;
-  cout << endl;
-  pCmd->PrintSyntax();
-  cout << endl;
-  pCmd->PrintCmd();
-  cout << endl;
-  
-  delete pCmd;
-
-  dlclose(pLibHnd_Move);
-  */
+{
   if(argc < 2){
     cerr << "Not enough number of Parameters" << endl;
     return 1;
@@ -79,9 +47,10 @@ int main(int argc, char **argv)
   }
 
   cout << IStrm4Cmds.str() << endl;
-
-  std::map<std::string, std::unique_ptr<LibInterface>> mapToInterface;
-  mapToInterface[{"Move"}] = std::make_unique<LibInterface>(LibInterface{"Move"});
-  
+/*
+  std::shared_ptr<LibInterface> tmp =  std::make_unique<LibInterface>(LibInterface{"Move"});
+  tmp->LibInterfaceInit();
+  mapToInterface[{"Move"}] = tmp;
+*/
   return 0;
 }
