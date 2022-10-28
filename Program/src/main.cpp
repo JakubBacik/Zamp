@@ -6,33 +6,11 @@
 #include "MobileObj.hh"
 #include <string>
 #include <cstdio>
-#include "LibInterface.hh"
-#include "Set4LibInterface.hh"
+#include "ProgramInterpreter.hh"
 #include <map>
 #include <memory>
 
 using namespace std;
-
-bool ExecPreprocesor(const char* NameOfFile, istringstream &IStrm4Cmds){
-    constexpr int sizeOfLine = 500;
-    string cmd4Preproc = "cpp -P ";
-    char line[sizeOfLine];
-    ostringstream oTmpStrm;
-
-    cmd4Preproc += NameOfFile;
-    FILE* pProc = popen(cmd4Preproc.c_str(), "r");
-
-    if(!pProc) 
-      return false;
-
-    while(fgets(line, sizeOfLine, pProc)){
-      oTmpStrm << line;
-    }
-    IStrm4Cmds.str(oTmpStrm.str());
-
-    return pclose(pProc) == 0;
-}
-
 
 int main(int argc, char **argv)
 {
@@ -41,17 +19,8 @@ int main(int argc, char **argv)
     return 1;
   }
 
-  istringstream IStrm4Cmds;
+  ProgramInterpreter programInterpreter;
 
-  if(!ExecPreprocesor(argv[1], IStrm4Cmds)){
-    cerr <<" Problem with ExecPreprocesor "<< endl;
-  }
-
-
-
-  Set4LibInterface tmp;
-  tmp.Set4LibInterfaceInit();
-  //cout << IStrm4Cmds.str() << endl;
-
+  programInterpreter.ExecProgram(argv[1]);
   return 0;
 }

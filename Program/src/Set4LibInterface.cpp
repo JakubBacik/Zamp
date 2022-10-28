@@ -1,14 +1,14 @@
 #include "Set4LibInterface.hh"
 #include <iostream>
+#include <memory>
 
 void Set4LibInterface::Set4LibInterfaceInit(){
-    const char* nameOfLibInterface[] = {"Pause", "Move", "Rotate", "Set"}; 
+    const char* nameOfLibInterface[] = {"Move", "Rotate", "Set", "Pause"}; 
     for(const char* itemInTable : nameOfLibInterface){
-       mapToInterface[{itemInTable}] = std::make_shared<LibInterface>(LibInterface{itemInTable}); 
-    }
-
-    for(auto itemInTable : mapToInterface){
-       itemInTable.second->LibInterfaceInit();
+       std::shared_ptr tmp = std::make_shared<LibInterface>(LibInterface{itemInTable});
+       std::cout << itemInTable << std::endl;
+       tmp->LibInterfaceInit();
+       mapToInterface[{itemInTable}]=tmp;
     }
 }
 

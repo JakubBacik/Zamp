@@ -13,6 +13,7 @@ class Set4LibInterface{
     Set4LibInterface();
     void Set4LibInterfaceInit();
     ~Set4LibInterface();
+    std::map<std::string, std::shared_ptr<LibInterface>> GetmapToInterface(){ return mapToInterface;}
 };
 
 #endif

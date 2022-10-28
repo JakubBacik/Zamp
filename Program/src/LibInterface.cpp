@@ -7,7 +7,7 @@ LibInterface::LibInterface(const char* nameOfLib): _CmdName{nameOfLib}{}
 
 int LibInterface::LibInterfaceInit(){
    std::string fullNameOfLib = "libInterp4" + _CmdName + ".so";
-
+  
    if(!_LibHandler){
      std::cerr << "!!! " << fullNameOfLib << " was inital yet" << std::endl;
      return 1;
@@ -39,7 +39,9 @@ int LibInterface::LibInterfaceInit(){
 }
 
 LibInterface::~LibInterface(){
-  dlclose(_LibHandler);
+  if(_LibHandler) {
+    dlclose(_LibHandler);
+  }
 }
 
 std::unique_ptr<Interp4Command> LibInterface::createCmd() {
