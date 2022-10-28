@@ -3,6 +3,7 @@
 
 #include <string>
 #include "Interp4Command.hh"
+#include <memory>
 
 class LibInterface{
     void* _LibHandler;
@@ -15,6 +16,8 @@ class LibInterface{
     LibInterface(const char* nameOfLib);
     int LibInterfaceInit();
     ~LibInterface();
+    std::string GetCmdName(){return _CmdName;}
+    std::unique_ptr<Interp4Command> createCmd();
 };
 
 #endif

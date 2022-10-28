@@ -28,7 +28,7 @@ Interp4Command* CreateCmd(void)
 /*!
  *
  */
-Interp4Set::Interp4Set(): _Speed_mmS(0)
+Interp4Set::Interp4Set(): _positionX(0), _positionY(0), _angleOZ(0)
 {}
 
 
@@ -40,7 +40,7 @@ void Interp4Set::PrintCmd() const
   /*
    *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
    */
-  cout << GetCmdName() << " " << _Speed_mmS  << " 10  2" << endl;
+  cout << GetCmdName() << " " << _objectName << " " << _positionX<< " " << _positionY << " " << _angleOZ << endl;
 }
 
 
@@ -61,6 +61,7 @@ bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
+  cout << "Exec:" << GetCmdName() << " " << _objectName << " " << _positionX << " " << _positionY << " " << _angleOZ << endl;
   return true;
 }
 
@@ -70,9 +71,18 @@ bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
  */
 bool Interp4Set::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+  if(!(Strm_CmdsList >> _objectName)){
+    return false;
+  }
+  if(!(Strm_CmdsList >> _positionX )){
+    return false;
+  }
+  if(!(Strm_CmdsList >> _positionY)){
+    return false;
+  }
+  if(!(Strm_CmdsList >> _angleOZ)){
+    return false;
+  }
   return true;
 }
 
@@ -91,5 +101,5 @@ Interp4Command* Interp4Set::CreateCmd()
  */
 void Interp4Set::PrintSyntax() const
 {
-  cout << "   Set  NazwaObiektu  Szybkosc[m/s]  DlugoscDrogi[m]" << endl;
+  cout << "   Set  NameOfObject  PositionX  PositionY AngleOZ" << endl;
 }

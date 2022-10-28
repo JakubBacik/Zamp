@@ -1,6 +1,7 @@
 #include "LibInterface.hh"
 #include <iostream>
 #include <dlfcn.h>
+#include <memory>
 
 LibInterface::LibInterface(const char* nameOfLib): _CmdName{nameOfLib}{}
 
@@ -39,4 +40,11 @@ int LibInterface::LibInterfaceInit(){
 
 LibInterface::~LibInterface(){
   dlclose(_LibHandler);
+}
+
+std::unique_ptr<Interp4Command> LibInterface::createCmd() {
+    if (_pCreateCmd) {
+        return std::unique_ptr<Interp4Command>(_pCreateCmd());
+    }
+    return nullptr;
 }

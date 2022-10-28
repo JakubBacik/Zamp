@@ -28,7 +28,7 @@ Interp4Command* CreateCmd(void)
 /*!
  *
  */
-Interp4Move::Interp4Move(): _Speed_mmS(0)
+Interp4Move::Interp4Move(): _speedMs(0), _distanceM(0)
 {}
 
 
@@ -40,7 +40,7 @@ void Interp4Move::PrintCmd() const
   /*
    *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
    */
-  cout << GetCmdName() << " " << _Speed_mmS  << " 10  2" << endl;
+  cout << GetCmdName() << " " << _objectName << " " << _speedMs << " " << _distanceM << endl;
 }
 
 
@@ -61,6 +61,7 @@ bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
+  cout << "Exec:" << GetCmdName() << " " << _objectName << " " << _speedMs << " " << _distanceM << endl;
   return true;
 }
 
@@ -70,9 +71,15 @@ bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
  */
 bool Interp4Move::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+  if(!(Strm_CmdsList >> _objectName)){
+    return false;
+  }
+  if(!(Strm_CmdsList >> _speedMs)){
+    return false;
+  }
+  if(!(Strm_CmdsList >> _distanceM)){
+    return false;
+  }
   return true;
 }
 
@@ -91,5 +98,5 @@ Interp4Command* Interp4Move::CreateCmd()
  */
 void Interp4Move::PrintSyntax() const
 {
-  cout << "   Move  NazwaObiektu  Szybkosc[m/s]  DlugoscDrogi[m]" << endl;
+  cout << "  Move  NameOfObject  Speed[m/s]  Distance[m]" << endl;
 }

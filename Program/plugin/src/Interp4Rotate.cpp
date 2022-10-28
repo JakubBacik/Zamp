@@ -28,7 +28,7 @@ Interp4Command* CreateCmd(void)
 /*!
  *
  */
-Interp4Rotate::Interp4Rotate(): _Speed_mmS(0)
+Interp4Rotate::Interp4Rotate(): _speed(0), _angle(0)
 {}
 
 
@@ -40,7 +40,7 @@ void Interp4Rotate::PrintCmd() const
   /*
    *  Tu trzeba napisać odpowiednio zmodyfikować kod poniżej.
    */
-  cout << GetCmdName() << " " << _Speed_mmS  << " 10  2" << endl;
+  cout << GetCmdName() << " " << _speed << " " << _angle  << endl;
 }
 
 
@@ -61,6 +61,7 @@ bool Interp4Rotate::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
   /*
    *  Tu trzeba napisać odpowiedni kod.
    */
+  cout << "Exec:" << GetCmdName() << " " << _speed << " " << _angle  << endl;
   return true;
 }
 
@@ -70,9 +71,15 @@ bool Interp4Rotate::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
  */
 bool Interp4Rotate::ReadParams(std::istream& Strm_CmdsList)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+   if(!(Strm_CmdsList >> _objectName)){
+    return false;
+  }
+  if(!(Strm_CmdsList >> _speed)){
+    return false;
+  }
+  if(!(Strm_CmdsList >> _angle)){
+    return false;
+  }
   return true;
 }
 
@@ -91,5 +98,5 @@ Interp4Command* Interp4Rotate::CreateCmd()
  */
 void Interp4Rotate::PrintSyntax() const
 {
-  cout << "   Rotate  NazwaObiektu  Szybkosc[m/s]  DlugoscDrogi[m]" << endl;
+  cout << "   Rotate  NameOfObject Speed Angle" << endl;
 }

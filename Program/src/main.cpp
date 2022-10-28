@@ -7,6 +7,7 @@
 #include <string>
 #include <cstdio>
 #include "LibInterface.hh"
+#include "Set4LibInterface.hh"
 #include <map>
 #include <memory>
 
@@ -46,11 +47,11 @@ int main(int argc, char **argv)
     cerr <<" Problem with ExecPreprocesor "<< endl;
   }
 
-  cout << IStrm4Cmds.str() << endl;
-/*
-  std::shared_ptr<LibInterface> tmp =  std::make_unique<LibInterface>(LibInterface{"Move"});
-  tmp->LibInterfaceInit();
-  mapToInterface[{"Move"}] = tmp;
-*/
+
+
+  Set4LibInterface tmp;
+  tmp.Set4LibInterfaceInit();
+  //cout << IStrm4Cmds.str() << endl;
+
   return 0;
 }
