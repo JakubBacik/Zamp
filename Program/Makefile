@@ -1,5 +1,5 @@
 __start__: obj __lines_for_space__ interp __plugin__
-	export LD_LIBRARY_PATH="./libs"; ./interp ../opis_dzialan/opis_dzialan.cmd
+	export LD_LIBRARY_PATH="./libs"; ./interp ../opis_dzialan/opis_dzialan.cmd ../Program/config/config.xml
 
 obj:
 	mkdir obj
@@ -21,8 +21,8 @@ LDFLAGS=-Wall
 
 
 
-interp: obj/main.o obj/LibInterface.o obj/Set4LibInterface.o obj/ProgramInterpreter.o
-	g++ ${LDFLAGS} -o interp  obj/main.o obj/LibInterface.o obj/Set4LibInterface.o obj/ProgramInterpreter.o -ldl
+interp: obj/main.o obj/LibInterface.o obj/Set4LibInterface.o obj/ProgramInterpreter.o obj/Configuration.o obj/xmlinterp.o obj/Scene.o obj/Sender.o
+	g++ ${LDFLAGS} -o interp  obj/main.o obj/LibInterface.o obj/Set4LibInterface.o obj/ProgramInterpreter.o  obj/Configuration.o obj/xmlinterp.o obj/Scene.o obj/Sender.o -ldl -lxerces-c
 
 obj/main.o: src/main.cpp inc/Interp4Command.hh 
 	g++ -c ${CPPFLAGS} -o obj/main.o src/main.cpp
@@ -35,6 +35,18 @@ obj/Set4LibInterface.o: src/Set4LibInterface.cpp inc/Set4LibInterface.hh inc/Lib
 
 obj/ProgramInterpreter.o: src/ProgramInterpreter.cpp inc/ProgramInterpreter.hh inc/Set4LibInterface.hh 
 	g++ -c ${CPPFLAGS} -o obj/ProgramInterpreter.o src/ProgramInterpreter.cpp 
+
+obj/Configuration.o: src/Configuration.cpp inc/Configuration.hh 
+	g++ -c ${CPPFLAGS} -o obj/Configuration.o src/Configuration.cpp 
+
+obj/xmlinterp.o: src/xmlinterp.cpp inc/xmlinterp.hh 
+	g++ -c ${CPPFLAGS} -o obj/xmlinterp.o src/xmlinterp.cpp 
+
+obj/Scene.o: src/Scene.cpp inc/Scene.hh 
+	g++ -c ${CPPFLAGS} -o obj/Scene.o src/Scene.cpp 
+
+obj/Sender.o: src/Sender.cpp inc/Sender.hh 
+	g++ -c ${CPPFLAGS} -o obj/Sender.o src/Sender.cpp 
 
 clean:
 	rm -f obj/* interp core*

@@ -10,20 +10,20 @@ int LibInterface::LibInterfaceInit(){
   
    if(!_LibHandler){
      std::cerr << "!!! " << fullNameOfLib << " was inital yet" << std::endl;
-     return 1;
+     return false;
    }
 
   _LibHandler = dlopen(fullNameOfLib.c_str(),RTLD_LAZY);
 
   if (!_LibHandler) {
     std::cerr << "!!!"  << fullNameOfLib <<" not found" << std::endl;
-    return 2;
+    return false;
   }
 
   _pFun = dlsym(_LibHandler,"CreateCmd");
   if (!_pFun) {
     std::cerr << "!!! CreateCmd not found" << std::endl;
-    return 3;
+    return false;
   }
 
   _pCreateCmd = reinterpret_cast<Interp4Command* (*)(void)>(_pFun);
@@ -35,7 +35,7 @@ int LibInterface::LibInterfaceInit(){
   
   delete pCmd;
 
-  return 0;
+  return true;
 }
 
 LibInterface::~LibInterface(){

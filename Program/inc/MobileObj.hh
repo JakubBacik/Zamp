@@ -3,8 +3,9 @@
 
 
 #include <string>
+#include <sstream>
+#include <map>
 #include "Vector3D.hh"
-
 
 /*!
  * \file
@@ -65,8 +66,17 @@
         * musi to być nazwa unikalna wśród wszystkich obiektów na scenie.
         */
        std::string  _Name;
+       std::map<std::string, Vector3D> mobileObjName;
 
      public:
+       MobileObj(){
+        mobileObjName["RGB"] = Vector3D{};
+        mobileObjName["Scale"] = Vector3D{};
+        mobileObjName["Shift"] = Vector3D{};
+        mobileObjName["RotXYZ_deg"] = Vector3D{};
+        mobileObjName["Trans_m"] = Vector3D{};
+
+       }
       /*!
        * \brief Udostępia wartość kąta \e roll.
        *
@@ -148,6 +158,22 @@
 	* Udostępnia nazwę obiektu w trybie tylko do odczytu.
         */
        const std::string & GetName() const { return _Name; }
+
+       void SetMobileMap(const std::string& name, const Vector3D& values){
+           mobileObjName[name] = values;
+       }
+
+       const std::map<std::string, Vector3D>& getMobileMap(){return mobileObjName;}
+
+       std::string ConcatMessage(){
+        std::stringstream Ostrm;
+        Ostrm << "Name=" << _Name << " ";
+        for(const auto& [obj_name, oper_vect] : mobileObjName){
+                Ostrm << obj_name << "=" << oper_vect << " ";
+        }
+        Ostrm << "\n";
+        return Ostrm.str();
+       }
     };
 
 

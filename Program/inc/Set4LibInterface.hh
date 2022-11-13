@@ -11,8 +11,9 @@ class Set4LibInterface{
 
     public:
     Set4LibInterface();
-    void Set4LibInterfaceInit();
     ~Set4LibInterface();
+    bool CreateInterpCommand(const char* libname);
+    void RemoveInterpCommand(const char* libname);
     std::map<std::string, std::shared_ptr<LibInterface>> GetmapToInterface(){ return mapToInterface;}
 };
 

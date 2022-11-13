@@ -4,6 +4,7 @@
 #include <cassert>
 #include "Interp4Command.hh"
 #include "MobileObj.hh"
+#include "Sender.hh"
 #include <string>
 #include <cstdio>
 #include "ProgramInterpreter.hh"
@@ -18,9 +19,11 @@ int main(int argc, char **argv)
     cerr << "Not enough number of Parameters" << endl;
     return 1;
   }
+  cout << argv[2] << endl << endl;
+  Sender _sender;
+  ProgramInterpreter programInterpreter(_sender);
 
-  ProgramInterpreter programInterpreter;
-
+  programInterpreter.Read_XML_Config(argv[2]);
   programInterpreter.ExecProgram(argv[1]);
   return 0;
 }
