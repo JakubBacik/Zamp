@@ -29,11 +29,11 @@ int LibInterface::LibInterfaceInit(){
   _pCreateCmd = reinterpret_cast<Interp4Command* (*)(void)>(_pFun);
 
 
-  Interp4Command *pCmd = _pCreateCmd();
+  /*Interp4Command *pCmd = _pCreateCmd();
 
   _CmdName = pCmd->GetCmdName(); 
   
-  delete pCmd;
+  delete pCmd;*/
 
   return true;
 }

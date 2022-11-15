@@ -21,7 +21,7 @@ class ProgramInterpreter{
     bool ExecPreprocesor(const char* NameOfFile, std::istringstream &IStrm4Cmds);
     void SendSceneState2Server();
     void AddObjectsToScene();
-    void CreateInterpCommands();
+    void InitLibrary();
 
 };
 

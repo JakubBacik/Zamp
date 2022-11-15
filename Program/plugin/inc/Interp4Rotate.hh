@@ -7,6 +7,8 @@
 #endif
 
 #include "Interp4Command.hh"
+#include "Sender.hh"
+#include <memory>
 
 /*!
  * \file
@@ -49,7 +51,7 @@ class Interp4Rotate: public Interp4Command {
   /*!
    * \brief Wykonuje polecenie oraz wizualizuje jego realizację
    */
-  bool ExecCmd( MobileObj  *pMobObj, int Socket) const override;
+  bool ExecCmd(std::shared_ptr<MobileObj> pMobObj,  int socket) const override;
   /*!
    * \brief Czyta wartości parametrów danego polecenia
    */
@@ -64,6 +66,7 @@ class Interp4Rotate: public Interp4Command {
    *  Ta metoda nie musi być zdefiniowna w klasie bazowej.
    */
   static Interp4Command* CreateCmd();
+  std::string GetName()override{return _objectName;}
  };
 
 #endif

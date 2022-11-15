@@ -77,6 +77,7 @@ namespace geom {
      * Wszystkim współrzędnym przypisana jest wartość 0.
      */
    Vector() { for (Type &Val : _Coord) Val = 0; }
+   Vector(Type values) { for (Type &Val : _Coord) Val = values;}
 
     /*!
      * \brief Dostęp do wybranej składowej wektora.

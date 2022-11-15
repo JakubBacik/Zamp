@@ -18,6 +18,7 @@ class Sender {
 
   int _Socket;
   public:
+    int getSocket(){return _Socket;}
     int Send(const char *sMesg);
     bool OpenConnection();
     int Close();

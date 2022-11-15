@@ -4,9 +4,15 @@ std::shared_ptr<MobileObj> Scene::FindMobileObj(const char* sObjName){
     return FindMobileObj(std::string{sObjName});
 }
 std::shared_ptr<MobileObj> Scene::FindMobileObj(const std::string& rObjNames){
-    if(Set_MobileObjs.find(rObjNames) == Set_MobileObjs.end()){
-        return Set_MobileObjs[rObjNames];
+    /*std::cout << rObjNames << std::endl;
+    for (const auto& [_, obj] : Set_MobileObjs) {
+        std::cout << obj->GetName() << "\n";
+    }*/
+    if(Set_MobileObjs.find(rObjNames) != Set_MobileObjs.end()){
+        //std::cout << "Odnaleziono" <<std::endl;
+        return Set_MobileObjs[rObjNames];    
     }
+    //std::cout << "---------------------- NieOdnaleziono ----------------------" <<std::endl;
     return nullptr;
 }
 void Scene::AddMobileObj(const std::string& objName){

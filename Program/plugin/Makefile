@@ -42,7 +42,7 @@ __lines_for_space__:
 	@echo
 
 
-obj/Interp4Move.o: src/Interp4Move.cpp ../inc/Interp4Command.hh\
+obj/Interp4Move.o: src/Interp4Move.cpp ../inc/Interp4Command.hh ../inc/Sender.hh\
                         inc/Interp4Move.hh 
 	g++ -c ${CPPFLAGS} -o obj/Interp4Move.o src/Interp4Move.cpp
 
@@ -50,11 +50,11 @@ obj/Interp4Pause.o: src/Interp4Pause.cpp ../inc/Interp4Command.hh\
                         inc/Interp4Pause.hh 
 	g++ -c ${CPPFLAGS} -o obj/Interp4Pause.o src/Interp4Pause.cpp
 
-obj/Interp4Rotate.o: src/Interp4Rotate.cpp ../inc/Interp4Command.hh\
+obj/Interp4Rotate.o: src/Interp4Rotate.cpp ../inc/Interp4Command.hh ../inc/Sender.hh\
                         inc/Interp4Rotate.hh 
 	g++ -c ${CPPFLAGS} -o obj/Interp4Rotate.o src/Interp4Rotate.cpp
 
-obj/Interp4Set.o: src/Interp4Set.cpp ../inc/Interp4Command.hh\
+obj/Interp4Set.o: src/Interp4Set.cpp ../inc/Interp4Command.hh ../inc/Sender.hh\
                         inc/Interp4Set.hh 
 	g++ -c ${CPPFLAGS} -o obj/Interp4Set.o src/Interp4Set.cpp
 

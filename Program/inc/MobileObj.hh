@@ -70,8 +70,8 @@
 
      public:
        MobileObj(){
-        mobileObjName["RGB"] = Vector3D{};
-        mobileObjName["Scale"] = Vector3D{};
+        mobileObjName["RGB"] = Vector3D{128};
+        mobileObjName["Scale"] = Vector3D{1};
         mobileObjName["Shift"] = Vector3D{};
         mobileObjName["RotXYZ_deg"] = Vector3D{};
         mobileObjName["Trans_m"] = Vector3D{};

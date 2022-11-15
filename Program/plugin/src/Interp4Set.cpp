@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Interp4Set.hh"
 #include "MobileObj.hh"
+#include <cmath>
 
 using std::cout;
 using std::endl;
@@ -52,15 +53,41 @@ const char* Interp4Set::GetCmdName() const
   return ::GetCmdName();
 }
 
+int Send(int Socket, const char *sMesg)
+{
+  ssize_t  IlWyslanych;
+  ssize_t  IlDoWyslania = (ssize_t) strlen(sMesg);
+
+  while ((IlWyslanych = write(Socket,sMesg,IlDoWyslania)) > 0) {
+    IlDoWyslania -= IlWyslanych;
+    sMesg += IlWyslanych;
+  }
+  if (IlWyslanych < 0) {
+    std::cerr << "*** Blad przeslania napisu." << std::endl;
+  }
+  return 0;
+}
 
 /*!
  *
  */
-bool Interp4Set::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
+bool Interp4Set::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) const
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+  std::map<std::string, Vector3D> mapa = pMobObj->getMobileMap();
+  Vector3D position = mapa["Trans_m"];
+  Vector3D AnglePosition = mapa["RotXYZ_deg"];
+  
+  position[0] = _positionX;
+  position[1] = _positionY;
+  AnglePosition[2] = _angleOZ;
+
+  pMobObj->SetMobileMap("Trans_m", position);
+  pMobObj->SetMobileMap("RotXYZ_deg", AnglePosition);
+  std::string ToSend = "UpdateObj ";
+  ToSend += pMobObj->ConcatMessage();
+  cout << ToSend << endl;
+  Send(socket, ToSend.c_str());
+
   cout << "Exec:" << GetCmdName() << " " << _objectName << " " << _positionX << " " << _positionY << " " << _angleOZ << endl;
   return true;
 }

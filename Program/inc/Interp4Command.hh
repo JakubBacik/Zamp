@@ -2,7 +2,9 @@
 #define  INTERP4COMMAND_HH
 
 #include <iostream>
+#include <memory>
 #include "MobileObj.hh"
+#include "Sender.hh"
 
 /*!
  * \file
@@ -39,11 +41,12 @@
    /*!
     * \brief Wykonuje polecenie oraz wizualizuje jego realizację.
     */
-   virtual bool ExecCmd( MobileObj *pMobObj, int Socket ) const = 0;
+   virtual bool ExecCmd(std::shared_ptr<MobileObj> pMobObj, int socket) const = 0;
    /*!
     * \brief Czyta wartości parametrów danego polecenia.
     */
    virtual bool ReadParams(std::istream& Strm_CmdsList) = 0;
+   virtual std::string GetName() = 0;
  };
 
 #endif

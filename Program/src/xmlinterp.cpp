@@ -63,7 +63,7 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes  &rAttrs)
  XMLSize_t  Size = 0;
  char* sLibName = xercesc::XMLString::transcode(rAttrs.getValue(Size));
 
- cout << "  Nazwa biblioteki: " << sLibName << endl;
+ //cout << "  Nazwa biblioteki: " << sLibName << endl;
 
  // Tu trzeba wpisać własny kod ...
  _config.addLibName(sLibName);
@@ -167,7 +167,7 @@ void XMLInterp4Config::startElement(  const   XMLCh* const            pURI,
                                     )
 {
   char* sElemName = xercesc::XMLString::transcode(pLocalName);
-  cout << "+++ Poczatek elementu: "<< sElemName << endl;
+  //cout << "+++ Poczatek elementu: "<< sElemName << endl;
 
   WhenStartElement(sElemName, rAttrs);
 
@@ -211,9 +211,9 @@ void XMLInterp4Config::endElement(  const   XMLCh* const    pURI,
    char* sURI =  xercesc::XMLString::transcode(pURI);
    char* sElemName = xercesc::XMLString::transcode(pLocalName);
    char* sQName =  xercesc::XMLString::transcode(pQName);
-   cout << "   URI: " << sURI << endl;
-   cout << " QName: " << sQName << endl;
-   cout << "----- Koniec elementu: "<< sElemName << endl;
+   //cout << "   URI: " << sURI << endl;
+   //cout << " QName: " << sQName << endl;
+   //cout << "----- Koniec elementu: "<< sElemName << endl;
 
    xercesc::XMLString::release(&sElemName);
 }

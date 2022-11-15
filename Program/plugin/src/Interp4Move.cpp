@@ -1,6 +1,9 @@
 #include <iostream>
 #include "Interp4Move.hh"
 #include "MobileObj.hh"
+#include "Sender.hh"
+#include <unistd.h>
+#include <cmath>
 
 using std::cout;
 using std::endl;
@@ -56,11 +59,43 @@ const char* Interp4Move::GetCmdName() const
 /*!
  *
  */
-bool Interp4Move::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
+int Send(int Socket, const char *sMesg)
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
+  ssize_t  IlWyslanych;
+  ssize_t  IlDoWyslania = (ssize_t) strlen(sMesg);
+
+  while ((IlWyslanych = write(Socket,sMesg,IlDoWyslania)) > 0) {
+    IlDoWyslania -= IlWyslanych;
+    sMesg += IlWyslanych;
+  }
+  if (IlWyslanych < 0) {
+    std::cerr << "*** Blad przeslania napisu." << std::endl;
+  }
+  return 0;
+}
+
+bool Interp4Move::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) const
+{
+  int durationOfMove = std::abs(_distanceM/_speedMs);
+
+  for (int i = 0; i < durationOfMove; ++i)
+  {
+    std::map<std::string, Vector3D> mapa = pMobObj->getMobileMap();
+    Vector3D position = mapa["Trans_m"];
+    Vector3D angle = mapa["RotXYZ_deg"];
+
+
+    position[0] += _speedMs*std::cos(M_PI *angle[2]/180);
+    position[1] += _speedMs*std::sin(M_PI *angle[2]/180); 
+
+    pMobObj->SetMobileMap("Trans_m", position);
+    std::string ToSend = "UpdateObj ";
+    ToSend += pMobObj->ConcatMessage();
+    cout << ToSend << endl;
+    Send(socket, ToSend.c_str());
+    usleep(100000);
+
+  }
   cout << "Exec:" << GetCmdName() << " " << _objectName << " " << _speedMs << " " << _distanceM << endl;
   return true;
 }

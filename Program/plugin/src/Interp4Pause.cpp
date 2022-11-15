@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Interp4Pause.hh"
 #include "MobileObj.hh"
+#include <unistd.h>
 
 using std::cout;
 using std::endl;
@@ -56,12 +57,12 @@ const char* Interp4Pause::GetCmdName() const
 /*!
  *
  */
-bool Interp4Pause::ExecCmd( MobileObj  *pMobObj,  int  Socket) const
+bool Interp4Pause::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) const
 {
-  /*
-   *  Tu trzeba napisać odpowiedni kod.
-   */
-  cout << "Exec:" << GetCmdName() <<  " " << _time << endl;
+  cout << "==================================================================" << endl;
+  cout << "                        Exec: " << GetCmdName() <<  " " << _time << "ms" << endl;
+  cout << "==================================================================" << endl;
+  usleep(_time*1000);
   return true;
 }
 

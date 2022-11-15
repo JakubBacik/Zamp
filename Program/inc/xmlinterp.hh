@@ -6,12 +6,10 @@
 //#include <xercesc/sax2/XMLReaderFactory.hpp>
 #include <xercesc/util/PlatformUtils.hpp>
 #include <xercesc/sax/Locator.hpp>
-
 #include <xercesc/sax2/Attributes.hpp>
 #include <xercesc/sax2/DefaultHandler.hpp>
 
 //XERCES_CPP_NAMESPACE_USE
-
 #include "Configuration.hh"
 
 
@@ -40,21 +38,12 @@ class XMLInterp4Config : public xercesc::DefaultHandler {
    /*!
     * \brief Wywoływana jest po napotkaniu nowego elementu XML
     */
-    virtual void startElement(
-                    const XMLCh *const               pURI, 
-                    const XMLCh *const               pLocalName, 
-                    const XMLCh *const               pQNname,
-                    const   xercesc::Attributes&     rAttrs
-                  ) override;
+    virtual void startElement(const XMLCh *const pURI, const XMLCh *const pLocalName, const XMLCh *const pQNname, const xercesc::Attributes& Attrs) override;
 
    /*!
     * \brief Wywoływana jest po dojściu do końca elementu XML
     */
-    virtual  void endElement(
-                    const XMLCh *const pURI, 
-                    const XMLCh *const pLocalName, 
-                    const XMLCh *const pQNname
-                   ) override;
+    virtual  void endElement(const XMLCh *const pURI, const XMLCh *const pLocalName, const XMLCh *const pQNname) override;
    /*!
     * \brief Wywoływana jest gdy napotkany zostanie błąd fatalny
     */
@@ -72,9 +61,7 @@ class XMLInterp4Config : public xercesc::DefaultHandler {
     /*!
      * \brief Wykonuje operacje związane z danym elementem XML
      */
-    void WhenStartElement( const std::string&             rElemName,
-		           const xercesc::Attributes&     rAttrs
-                         );
+    void WhenStartElement( const std::string& rElemName, const xercesc::Attributes& rAttrs);
     /*!
      * \brief Analizuje atrybuty i  odpwiednio je interpretuje
      */
