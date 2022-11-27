@@ -7,13 +7,16 @@
 #include "Sender.hh"
 #include <iostream>
 #include <sstream>
+#include <list>
+#include <thread>
 
 class ProgramInterpreter{
   private:
     Scene _scene;
     Set4LibInterface _set4LibInterface;
     Configuration _config;
-    Sender _sender;
+    Sender& _sender;
+    std::list<std::thread> _threadList;
 
   public:
     ProgramInterpreter(Sender& _sender) : _sender{_sender}{}

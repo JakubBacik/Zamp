@@ -14,6 +14,7 @@ class Scene{
     std::shared_ptr<MobileObj> FindMobileObj(const char* sObjName){return FindMobileObj(std::string{sObjName});} 
     std::map<std::string, std::shared_ptr<MobileObj>> GetMobileObjects() { return Set_MobileObjs; };
     std::shared_ptr<MobileObj> FindMobileObj(const std::string& rObjNames){
+      std::cout << rObjNames << std::endl;
       if(Set_MobileObjs.find(rObjNames) != Set_MobileObjs.end()){
         return Set_MobileObjs[rObjNames];    
       }

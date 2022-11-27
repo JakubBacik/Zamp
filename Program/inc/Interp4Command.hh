@@ -3,6 +3,8 @@
 
 #include <iostream>
 #include <memory>
+#include <chrono>
+#include <thread>
 #include "Scene.hh"
 #include "Sender.hh"
 

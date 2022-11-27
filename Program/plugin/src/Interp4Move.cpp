@@ -85,6 +85,7 @@ bool Interp4Move::ExecCmd(Scene& scene, Sender& sender) const
 
   for (int i = 0; i < durationOfMove; ++i)
   {
+    pMobObj->LockAccess();
     std::map<std::string, Vector3D> mapa = pMobObj->getMobileMap();
     Vector3D position = mapa["Trans_m"];
     Vector3D angle = mapa["RotXYZ_deg"];
@@ -98,7 +99,8 @@ bool Interp4Move::ExecCmd(Scene& scene, Sender& sender) const
     ToSend += pMobObj->ConcatMessage();
     cout << ToSend << endl;
     sender.Send(ToSend.c_str());
-    usleep(100000);
+    pMobObj->UnlockAccess();
+    std::this_thread::sleep_for(std::chrono::milliseconds(int(100)));
 
   }
   cout << "Exec:" << GetCmdName() << " " << _objectName << " " << _speedMs << " " << _distanceM << endl;

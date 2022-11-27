@@ -2,6 +2,8 @@
 #include "Interp4Pause.hh"
 #include "MobileObj.hh"
 #include <unistd.h>
+#include <chrono>
+#include <thread>
 
 using std::cout;
 using std::endl;
@@ -62,7 +64,7 @@ bool Interp4Pause::ExecCmd(Scene& scene, Sender& sender) const
   cout << "==================================================================" << endl;
   cout << "                        Exec: " << GetCmdName() <<  " " << _time << "ms" << endl;
   cout << "==================================================================" << endl;
-  usleep(_time*1000);
+  std::this_thread::sleep_for(std::chrono::milliseconds(int(_time*100)));
   return true;
 }
 

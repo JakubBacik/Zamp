@@ -5,6 +5,7 @@
 #include <string>
 #include <sstream>
 #include <map>
+#include <mutex>
 #include "Vector3D.hh"
 
 /*!
@@ -67,6 +68,7 @@
         */
        std::string  _Name;
        std::map<std::string, Vector3D> mobileObjName;
+       std::mutex _mutexForObject;
 
      public:
        MobileObj(){
@@ -77,6 +79,8 @@
         mobileObjName["Trans_m"] = Vector3D{};
 
        }
+       void LockAccess(){_mutexForObject.lock();}
+       void UnlockAccess(){_mutexForObject.unlock();}
       /*!
        * \brief Udostępia wartość kąta \e roll.
        *

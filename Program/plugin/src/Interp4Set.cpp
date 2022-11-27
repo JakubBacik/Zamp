@@ -78,6 +78,7 @@ bool Interp4Set::ExecCmd(Scene& scene, Sender& sender) const
     std::cerr << "Object " << _objectName <<" not found, ExecCmd"  << std::endl;
     return false;
   }
+  pMobObj->LockAccess();
   std::map<std::string, Vector3D> mapa = pMobObj->getMobileMap();
   Vector3D position = mapa["Trans_m"];
   Vector3D AnglePosition = mapa["RotXYZ_deg"];
@@ -92,6 +93,7 @@ bool Interp4Set::ExecCmd(Scene& scene, Sender& sender) const
   ToSend += pMobObj->ConcatMessage();
   cout << ToSend << endl;
   sender.Send(ToSend.c_str());
+  pMobObj->UnlockAccess();
 
   cout << "Exec:" << GetCmdName() << " " << _objectName << " " << _positionX << " " << _positionY << " " << _angleOZ << endl;
   return true;

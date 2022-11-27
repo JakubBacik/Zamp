@@ -46,6 +46,16 @@ bool ProgramInterpreter::ExecProgram(const char* fileNameProg){
   std::string lineFromCmd;
 
   while(IStrm4Cmds >> lineFromCmd){
+    if(lineFromCmd == "Begin_Parallel_Actions"){
+      continue;
+    }
+    if(lineFromCmd == "End_Parallel_Actions"){
+      for(std::thread& rTh : _threadList){
+        rTh.join();
+      }
+      _threadList.clear();
+      continue;
+    }
     std::map<std::string, std::shared_ptr<LibInterface>> mapFromSet4LibInterface = _set4LibInterface.GetmapToInterface();
         
     if(mapFromSet4LibInterface.find(lineFromCmd) == mapFromSet4LibInterface.end()){
@@ -60,7 +70,12 @@ bool ProgramInterpreter::ExecProgram(const char* fileNameProg){
       return false;
     }
     //createCmdFor->PrintCmd();
-    createCmdFor->ExecCmd(_scene, _sender);
+    //createCmdFor->ExecCmd(_scene, _sender);
+    _threadList.emplace_back(std::thread{[&, cmd = std::move(createCmdFor)](){cmd->ExecCmd(_scene, _sender);}});
+  }
+
+  for(std::thread& rTh : _threadList){
+    rTh.join();
   }
 
   _sender.Close();
@@ -153,7 +168,7 @@ void ProgramInterpreter::InitLibrary(){
 
 void ProgramInterpreter::SendSceneState2Server(){
   std::string msg;
-  
+
   msg += "Clear\n";
   for (const auto &rObj : _scene.GetMobileObjects()) {
     msg += "AddObj " + rObj.second->ConcatMessage();  

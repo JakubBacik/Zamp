@@ -1,7 +1,6 @@
 #ifndef SENDER_HH
 #define SENDER_HH
 
-#include "Scene.hh"
 #include <thread>
 #include <sys/types.h>
 #include <sys/socket.h>
@@ -11,17 +10,20 @@
 #include <unistd.h>
 #include <string.h>
 #include <vector>
+#include <mutex>
 
 constexpr int PORT = 6217;
 
 class Sender {
   private:
     int _Socket;
+    std::mutex _SenderMutex;
   public:
     int getSocket(){return _Socket;}
     int Send(const char *sMesg){
       ssize_t  IlWyslanych;
       ssize_t  IlDoWyslania = (ssize_t) strlen(sMesg);
+      std::lock_guard<std::mutex> lockGurad{_SenderMutex};
 
       while ((IlWyslanych = write(_Socket,sMesg,IlDoWyslania)) > 0) {
         IlDoWyslania -= IlWyslanych;
