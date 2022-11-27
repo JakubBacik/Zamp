@@ -49,15 +49,15 @@ void XMLInterp4Config::endDocument()
 void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes  &rAttrs)
 {
  if (rAttrs.getLength() != 1) {
-      cerr << "Zla ilosc atrybutow dla \"Lib\"" << endl;
-      exit(1);
+    cerr << "Zla ilosc atrybutow dla \"Lib\"" << endl;
+    exit(1);
  }
 
  char* sParamName = xercesc::XMLString::transcode(rAttrs.getQName(0));
 
  if (strcmp(sParamName,"Name")) {
-      cerr << "Zla nazwa atrybutu dla Lib" << endl;
-      exit(1);
+    cerr << "Zla nazwa atrybutu dla Lib" << endl;
+    exit(1);
  }         
 
  XMLSize_t  Size = 0;
@@ -81,8 +81,8 @@ void XMLInterp4Config::ProcessLibAttrs(const xercesc::Attributes  &rAttrs)
 void XMLInterp4Config::ProcessCubeAttrs(const xercesc::Attributes  &rAttrs)
 {
  if (rAttrs.getLength() < 1) {
-      cerr << "Zla ilosc atrybutow dla \"Cube\"" << endl;
-      exit(1);
+    cerr << "Zla ilosc atrybutow dla \"Cube\"" << endl;
+    exit(1);
  }
 
  /*
@@ -120,9 +120,7 @@ for(XMLSize_t i=1; i<rAttrs.getLength(); ++i){
  * \param[in] rElemName - nazwa elementu XML.
  * \param[in] rAttrs - atrybuty napotkanego elementu XML.
  */
-void XMLInterp4Config::WhenStartElement( const std::string           &rElemName,
-		                         const xercesc::Attributes   &rAttrs
-                                       )
+void XMLInterp4Config::WhenStartElement( const std::string &rElemName, const xercesc::Attributes   &rAttrs)
 {
   if (rElemName == "Lib") {
     ProcessLibAttrs(rAttrs);   return;   
@@ -160,17 +158,12 @@ void XMLInterp4Config::WhenStartElement( const std::string           &rElemName,
 /*
  * Te metode nalezy odpowiednio zdekomponowac!!!
  */
-void XMLInterp4Config::startElement(  const   XMLCh* const            pURI,
-                                      const   XMLCh* const            pLocalName,
-                                      const   XMLCh* const            pQName,
-				      const   xercesc::Attributes&    rAttrs
-                                    )
+void XMLInterp4Config::startElement(const XMLCh* const pURI,const XMLCh* const pLocalName, const XMLCh* const pQName, const xercesc::Attributes& rAttrs)
 {
   char* sElemName = xercesc::XMLString::transcode(pLocalName);
   //cout << "+++ Poczatek elementu: "<< sElemName << endl;
 
   WhenStartElement(sElemName, rAttrs);
-
   xercesc::XMLString::release(&sElemName);
 }
 
@@ -203,19 +196,16 @@ void XMLInterp4Config::startElement(  const   XMLCh* const            pURI,
  *                      przykładzie), to \p pQName i \p pLocalName dostaczają identyczne napisy.
  *                      
  */
-void XMLInterp4Config::endElement(  const   XMLCh* const    pURI,
-                                    const   XMLCh* const    pLocalName,
-                                    const   XMLCh* const    pQName
-                                 )
+void XMLInterp4Config::endElement(const XMLCh* const pURI,const XMLCh* const pLocalName, const XMLCh* const pQName)
 {
-   char* sURI =  xercesc::XMLString::transcode(pURI);
-   char* sElemName = xercesc::XMLString::transcode(pLocalName);
-   char* sQName =  xercesc::XMLString::transcode(pQName);
-   //cout << "   URI: " << sURI << endl;
-   //cout << " QName: " << sQName << endl;
-   //cout << "----- Koniec elementu: "<< sElemName << endl;
+  char* sURI =  xercesc::XMLString::transcode(pURI);
+  char* sElemName = xercesc::XMLString::transcode(pLocalName);
+  char* sQName =  xercesc::XMLString::transcode(pQName);
+  //cout << "   URI: " << sURI << endl;
+  //cout << " QName: " << sQName << endl;
+  //cout << "----- Koniec elementu: "<< sElemName << endl;
 
-   xercesc::XMLString::release(&sElemName);
+  xercesc::XMLString::release(&sElemName);
 }
 
 

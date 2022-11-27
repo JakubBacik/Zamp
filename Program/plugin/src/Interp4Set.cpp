@@ -71,8 +71,13 @@ int Send(int Socket, const char *sMesg)
 /*!
  *
  */
-bool Interp4Set::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) const
-{
+bool Interp4Set::ExecCmd(Scene& scene, Sender& sender) const
+{ 
+  std::shared_ptr<MobileObj> pMobObj = scene.FindMobileObj(_objectName);
+  if(pMobObj == nullptr){
+    std::cerr << "Object " << _objectName <<" not found, ExecCmd"  << std::endl;
+    return false;
+  }
   std::map<std::string, Vector3D> mapa = pMobObj->getMobileMap();
   Vector3D position = mapa["Trans_m"];
   Vector3D AnglePosition = mapa["RotXYZ_deg"];
@@ -86,7 +91,7 @@ bool Interp4Set::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) const
   std::string ToSend = "UpdateObj ";
   ToSend += pMobObj->ConcatMessage();
   cout << ToSend << endl;
-  Send(socket, ToSend.c_str());
+  sender.Send(ToSend.c_str());
 
   cout << "Exec:" << GetCmdName() << " " << _objectName << " " << _positionX << " " << _positionY << " " << _angleOZ << endl;
   return true;

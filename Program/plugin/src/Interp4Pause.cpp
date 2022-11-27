@@ -57,7 +57,7 @@ const char* Interp4Pause::GetCmdName() const
 /*!
  *
  */
-bool Interp4Pause::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) const
+bool Interp4Pause::ExecCmd(Scene& scene, Sender& sender) const
 {
   cout << "==================================================================" << endl;
   cout << "                        Exec: " << GetCmdName() <<  " " << _time << "ms" << endl;

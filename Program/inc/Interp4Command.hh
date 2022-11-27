@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <memory>
-#include "MobileObj.hh"
+#include "Scene.hh"
 #include "Sender.hh"
 
 /*!
@@ -41,7 +41,7 @@
    /*!
     * \brief Wykonuje polecenie oraz wizualizuje jego realizację.
     */
-   virtual bool ExecCmd(std::shared_ptr<MobileObj> pMobObj, int socket) const = 0;
+   virtual bool ExecCmd(Scene& scene, Sender& sender) const = 0;
    /*!
     * \brief Czyta wartości parametrów danego polecenia.
     */

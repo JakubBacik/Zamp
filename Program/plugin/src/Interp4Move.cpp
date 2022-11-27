@@ -74,8 +74,13 @@ int Send(int Socket, const char *sMesg)
   return 0;
 }
 
-bool Interp4Move::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) const
+bool Interp4Move::ExecCmd(Scene& scene, Sender& sender) const
 {
+  std::shared_ptr<MobileObj> pMobObj = scene.FindMobileObj(_objectName);
+  if(pMobObj == nullptr){
+    std::cerr << "Object " << _objectName <<" not found, ExecCmd"  << std::endl;
+    return false;
+  }
   int durationOfMove = std::abs(_distanceM/_speedMs);
 
   for (int i = 0; i < durationOfMove; ++i)
@@ -92,7 +97,7 @@ bool Interp4Move::ExecCmd(std::shared_ptr<MobileObj> pMobObj,   int socket) cons
     std::string ToSend = "UpdateObj ";
     ToSend += pMobObj->ConcatMessage();
     cout << ToSend << endl;
-    Send(socket, ToSend.c_str());
+    sender.Send(ToSend.c_str());
     usleep(100000);
 
   }

@@ -7,9 +7,10 @@
 #include "LibInterface.hh"
 
 class Set4LibInterface{
+  private:
     std::map<std::string, std::shared_ptr<LibInterface>> mapToInterface;
 
-    public:
+  public:
     Set4LibInterface();
     ~Set4LibInterface();
     bool CreateInterpCommand(const char* libname);

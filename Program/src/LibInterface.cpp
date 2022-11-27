@@ -6,12 +6,12 @@
 LibInterface::LibInterface(const char* nameOfLib): _CmdName{nameOfLib}{}
 
 int LibInterface::LibInterfaceInit(){
-   std::string fullNameOfLib = "libInterp4" + _CmdName + ".so";
+  std::string fullNameOfLib = "libInterp4" + _CmdName + ".so";
   
-   if(!_LibHandler){
-     std::cerr << "!!! " << fullNameOfLib << " was inital yet" << std::endl;
-     return false;
-   }
+  if(!_LibHandler){
+    std::cerr << "!!! " << fullNameOfLib << " was inital yet" << std::endl;
+    return false;
+  }
 
   _LibHandler = dlopen(fullNameOfLib.c_str(),RTLD_LAZY);
 
@@ -28,13 +28,6 @@ int LibInterface::LibInterfaceInit(){
 
   _pCreateCmd = reinterpret_cast<Interp4Command* (*)(void)>(_pFun);
 
-
-  /*Interp4Command *pCmd = _pCreateCmd();
-
-  _CmdName = pCmd->GetCmdName(); 
-  
-  delete pCmd;*/
-
   return true;
 }
 
@@ -45,8 +38,8 @@ LibInterface::~LibInterface(){
 }
 
 std::unique_ptr<Interp4Command> LibInterface::createCmd() {
-    if (_pCreateCmd) {
-        return std::unique_ptr<Interp4Command>(_pCreateCmd());
-    }
-    return nullptr;
+  if (_pCreateCmd) {
+    return std::unique_ptr<Interp4Command>(_pCreateCmd());
+  }
+  return nullptr;
 }

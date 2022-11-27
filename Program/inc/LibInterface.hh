@@ -6,13 +6,12 @@
 #include <memory>
 
 class LibInterface{
+  private:
     void* _LibHandler;
     void *_pFun;
     std::string _CmdName;
     Interp4Command *(*_pCreateCmd)(void);
-
-
-    public:
+  public:
     LibInterface(const char* nameOfLib);
     int LibInterfaceInit();
     ~LibInterface();

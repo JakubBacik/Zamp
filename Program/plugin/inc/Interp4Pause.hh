@@ -49,7 +49,7 @@ class Interp4Pause: public Interp4Command {
   /*!
    * \brief Wykonuje polecenie oraz wizualizuje jego realizację
    */
-  bool ExecCmd(std::shared_ptr<MobileObj> pMobObj,  int socket) const override;
+  bool ExecCmd(Scene& scene, Sender& sender) const override;
   /*!
    * \brief Czyta wartości parametrów danego polecenia
    */

@@ -9,12 +9,13 @@
 #include <sstream>
 
 class ProgramInterpreter{
+  private:
     Scene _scene;
     Set4LibInterface _set4LibInterface;
     Configuration _config;
     Sender _sender;
 
-    public:
+  public:
     ProgramInterpreter(Sender& _sender) : _sender{_sender}{}
     bool Read_XML_Config(const char* fileName);
     bool ExecProgram(const char* fileNameProg);

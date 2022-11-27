@@ -33,7 +33,7 @@ bool ProgramInterpreter::ExecPreprocesor(const char* NameOfFile, std::istringstr
 bool ProgramInterpreter::ExecProgram(const char* fileNameProg){
   InitLibrary();
   AddObjectsToScene();
-  //_scene.printObjects();
+  _scene.printObjects();
   if (!_sender.OpenConnection()) return false;
     SendSceneState2Server();
 
@@ -59,9 +59,8 @@ bool ProgramInterpreter::ExecProgram(const char* fileNameProg){
       std::cerr << "Error some problem with parametrs to plugin" << std::endl;
       return false;
     }
-    std::shared_ptr<MobileObj> _Obj = _scene.FindMobileObj(createCmdFor->GetName());
     //createCmdFor->PrintCmd();
-    createCmdFor->ExecCmd(_Obj, _sender.getSocket());
+    createCmdFor->ExecCmd(_scene, _sender);
   }
 
   _sender.Close();
@@ -154,7 +153,7 @@ void ProgramInterpreter::InitLibrary(){
 
 void ProgramInterpreter::SendSceneState2Server(){
   std::string msg;
-
+  
   msg += "Clear\n";
   for (const auto &rObj : _scene.GetMobileObjects()) {
     msg += "AddObj " + rObj.second->ConcatMessage();  
