@@ -47,11 +47,14 @@ bool ProgramInterpreter::ExecProgram(const char* fileNameProg){
 
   while(IStrm4Cmds >> lineFromCmd){
     if(lineFromCmd == "Begin_Parallel_Actions"){
+      std::cout << "Begin_Actions"<< std::endl;
       continue;
     }
     if(lineFromCmd == "End_Parallel_Actions"){
+      std::cout << "End_Actions"<< std::endl;
       for(std::thread& rTh : _threadList){
         rTh.join();
+        std::cout << "Join inside"<< std::endl;
       }
       _threadList.clear();
       continue;
@@ -69,15 +72,18 @@ bool ProgramInterpreter::ExecProgram(const char* fileNameProg){
       std::cerr << "Error some problem with parametrs to plugin" << std::endl;
       return false;
     }
+    std::cout << "Make thread" <<std::endl;
     //createCmdFor->PrintCmd();
     //createCmdFor->ExecCmd(_scene, _sender);
     _threadList.emplace_back(std::thread{[&, cmd = std::move(createCmdFor)](){cmd->ExecCmd(_scene, _sender);}});
+    
   }
 
   for(std::thread& rTh : _threadList){
     rTh.join();
+    std::cout << "Join outside"<< std::endl;
   }
-
+  
   _sender.Close();
   return true;
 }

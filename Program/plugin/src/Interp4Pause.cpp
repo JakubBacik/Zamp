@@ -64,7 +64,7 @@ bool Interp4Pause::ExecCmd(Scene& scene, Sender& sender) const
   cout << "==================================================================" << endl;
   cout << "                        Exec: " << GetCmdName() <<  " " << _time << "ms" << endl;
   cout << "==================================================================" << endl;
-  std::this_thread::sleep_for(std::chrono::milliseconds(int(_time*100)));
+  std::this_thread::sleep_for(std::chrono::milliseconds(int(_time)));
   return true;
 }
 
